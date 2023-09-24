@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_portfolio_project/StateManagement/InheritedWidget/plan_provider.dart';
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/plan.dart';
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/task.dart';
 
@@ -8,7 +9,7 @@ class PlanScreen extends StatefulWidget {
 }
 
 class _PlanScreenState extends State<PlanScreen> {
-  final plan = Plan();
+  //final plan = Plan();
   late ScrollController scrollController;
 
   @override
@@ -31,7 +32,7 @@ class _PlanScreenState extends State<PlanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    //final plan = PlanProvider.of(context);
+    final plan = PlanProvider.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Master Plan"),
