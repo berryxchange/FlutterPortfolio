@@ -4,12 +4,19 @@ import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/plan.
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/task.dart';
 
 class PlanScreen extends StatefulWidget {
+  final Plan plan;
+  const PlanScreen({required Key? key, required this.plan}) : super(key: key);
+
   @override
   State<PlanScreen> createState() => _PlanScreenState();
 }
 
 class _PlanScreenState extends State<PlanScreen> {
   //final plan = Plan();
+  Plan get plan {
+    return widget.plan;
+  }
+
   late ScrollController scrollController;
 
   @override
@@ -32,7 +39,7 @@ class _PlanScreenState extends State<PlanScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final plan = PlanProvider.of(context);
+    //final plan = PlanProvider.of(context);
     return Scaffold(
       appBar: AppBar(
         title: Text("Master Plan"),
