@@ -4,7 +4,9 @@ import 'package:flutter_portfolio_project/StateManagement/Model-View/View/plan_s
 import 'package:flutter_portfolio_project/StateManagement/Multi-Screen/Views/plan_creator_screen.dart';
 
 void main() {
-  runApp(const MasterPlanApp());
+  runApp(PlanProvider(
+        key: null,
+        child: MasterPlanApp()));
 }
 
 class MasterPlanApp extends StatelessWidget {
@@ -12,11 +14,9 @@ class MasterPlanApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlanProvider(
-        key: null,
-        child: MaterialApp(
-          theme: ThemeData(primarySwatch: Colors.purple),
-          home: PlanCreatorScreen(),
-        ));
+    return MaterialApp(
+      theme: ThemeData(primarySwatch: Colors.purple),
+      home: PlanCreatorScreen(),
+    );
   }
 }
