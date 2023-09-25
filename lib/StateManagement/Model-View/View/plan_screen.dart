@@ -57,9 +57,9 @@ class _PlanScreenState extends State<PlanScreen> {
   Widget _buildAddTaskButton({required Plan plan}) {
     return FloatingActionButton(
       onPressed: () {
-        setState(() {
-          plan.tasks.add(Task());
-        });
+        final controller = PlanProvider.of(context);
+        controller.createNewTask(plan: plan, description: "");
+        setState(() {});
       },
       child: Icon(Icons.add),
     );
@@ -75,27 +75,36 @@ class _PlanScreenState extends State<PlanScreen> {
   }
 
   Widget _buildTaskTile({required Task task}) {
-    return ListTile(
-      leading: Checkbox(
-          value: task.complete,
-          onChanged: (selected) {
-            return setState(() {
-              task.complete = selected!;
-            });
-          }),
-      title: TextFormField(
-        initialValue: task.description,
-        onFieldSubmitted: (text) {
-          setState(() {
-            task.description = text;
-          });
+    return Dismissible(
+        key: ValueKey(task),
+        background: Container(color: Colors.red),
+        direction: DismissDirection.endToStart,
+        onDismissed: (_) {
+          final controller = PlanProvider.of(context);
+          controller.deleteTask(plan: plan, task: task);
+          setState(() {});
         },
-        onChanged: (text) {
-          setState(() {
-            task.description = text;
-          });
-        },
-      ),
-    );
+        child: ListTile(
+          leading: Checkbox(
+              value: task.complete,
+              onChanged: (selected) {
+                return setState(() {
+                  task.complete = selected!;
+                });
+              }),
+          title: TextFormField(
+            initialValue: task.description,
+            onFieldSubmitted: (text) {
+              setState(() {
+                task.description = text;
+              });
+            },
+            onChanged: (text) {
+              setState(() {
+                task.description = text;
+              });
+            },
+          ),
+        ));
   }
 }
