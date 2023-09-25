@@ -1,12 +1,14 @@
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/plan.dart';
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/task.dart';
+import 'package:flutter_portfolio_project/StateManagement/Services/plan_services.dart';
 
 class PlanController {
-  final List<Plan> _plans = [];
+  //final List<Plan> _plans = [];
+  final services = PlanServices(); //the storage for plans
 
   //This public getter cannnot be modified by any other object
   List<Plan> get plans {
-    return List.unmodifiable(_plans);
+    return List.unmodifiable(services.getAllPlans());
   }
 
   void addNewPlan({required String name}) {
@@ -15,21 +17,21 @@ class PlanController {
     }
 
     name = _checkForDuplicates(
-        items: _plans.map((plan) {
+        items: plans.map((plan) {
           return plan.name;
         }),
         text: name);
 
-    final plan = Plan();
-    plan.name = name;
-    _plans.add(plan);
+    services.createPlan(name: name);
+  }
+
+  void savePlan({required Plan plan}) {
+    services.savePlan(plan: plan);
   }
 
   void deletePlan({required Plan plan}) {
-    _plans.remove(plan);
+    services.delete(plan: plan);
   }
-
-
 
   createNewTask({required Plan plan, required String description}) {
     //check if description is empty
@@ -46,13 +48,11 @@ class PlanController {
     description =
         _checkForDuplicates(items: taskListDescripions, text: description);
 
-    final task = Task();
-    task.description = description;
-    plan.tasks.add(task);
+    services.addTask(plan: plan, description: description);
   }
 
   void deleteTask({required Plan plan, required Task task}) {
-    plan.tasks.remove(task);
+    services.deleteTask(plan: plan, task: task);
   }
 
   String _checkForDuplicates(

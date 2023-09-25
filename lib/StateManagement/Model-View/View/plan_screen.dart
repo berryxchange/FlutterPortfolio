@@ -40,17 +40,28 @@ class _PlanScreenState extends State<PlanScreen> {
   @override
   Widget build(BuildContext context) {
     //final plan = PlanProvider.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: Text("Master Plan"),
+    return WillPopScope(
+      onWillPop: () {
+        final controller = PlanProvider.of(context);
+        controller.savePlan(plan: plan);
+        Plan thisPlan = controller.plans.firstWhere((cachedPlan) {
+          return cachedPlan.id == plan.id;
+        });
+        
+        return Future.value(true);
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text("Master Plan"),
+        ),
+        body: Column(
+          children: <Widget>[
+            Expanded(child: _buildList(plan: plan)),
+            SafeArea(child: Text(plan.completenessMessage))
+          ],
+        ),
+        floatingActionButton: _buildAddTaskButton(plan: plan),
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(child: _buildList(plan: plan)),
-          SafeArea(child: Text(plan.completenessMessage))
-        ],
-      ),
-      floatingActionButton: _buildAddTaskButton(plan: plan),
     );
   }
 

@@ -1,8 +1,10 @@
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/task.dart';
+import 'package:flutter_portfolio_project/StateManagement/Repositories/repository.dart';
 
 class Plan {
+  final int id;
   String name;
-  final List<Task> tasks = [];
+  List<Task> tasks = [];
 
   int get completeCount {
     return tasks.where((task) {
@@ -14,5 +16,23 @@ class Plan {
     return "$completeCount out of ${tasks.length} tasks";
   }
 
-  Plan({this.name = ""});
+  Plan({required this.id, this.name = ""});
+
+  //Deserialization
+  Plan.fromModel({required Model model})
+      : id = model.id,
+        name = (model.data["name"] == null)? "": model.data["name"],
+        tasks = model.data["tasks"]?.map<Task>((task) {
+              return Task.fromModel(model: task);
+            })?.toList() ??
+            <Task>[];
+
+  Model toModel() {
+    return Model(id: id, data: {
+      "name": name,
+      "tasks": tasks.map((task) {
+        return task.toModel();
+      }).toList()
+    });
+  }
 }
