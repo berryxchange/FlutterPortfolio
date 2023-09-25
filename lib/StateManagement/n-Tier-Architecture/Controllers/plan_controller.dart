@@ -1,6 +1,6 @@
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/plan.dart';
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/task.dart';
-import 'package:flutter_portfolio_project/StateManagement/Services/plan_services.dart';
+import 'package:flutter_portfolio_project/StateManagement/n-Tier-Architecture/Services/plan_services.dart';
 
 class PlanController {
   //final List<Plan> _plans = [];

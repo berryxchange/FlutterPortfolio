@@ -1,4 +1,4 @@
-import 'package:flutter_portfolio_project/StateManagement/Repositories/repository.dart';
+import 'package:flutter_portfolio_project/StateManagement/n-Tier-Architecture/Repositories/repository.dart';
 
 class Task {
   final int id;
@@ -15,7 +15,6 @@ class Task {
 
   Model toModel() {
     return Model(
-        id: id, 
-        data: {"description": description, "complete": complete});
+        id: id, data: {"description": description, "complete": complete});
   }
 }

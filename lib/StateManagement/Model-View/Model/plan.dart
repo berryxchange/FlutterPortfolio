@@ -1,5 +1,5 @@
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/task.dart';
-import 'package:flutter_portfolio_project/StateManagement/Repositories/repository.dart';
+import 'package:flutter_portfolio_project/StateManagement/n-Tier-Architecture/Repositories/repository.dart';
 
 class Plan {
   final int id;
@@ -21,7 +21,7 @@ class Plan {
   //Deserialization
   Plan.fromModel({required Model model})
       : id = model.id,
-        name = (model.data["name"] == null)? "": model.data["name"],
+        name = (model.data["name"] == null) ? "" : model.data["name"],
         tasks = model.data["tasks"]?.map<Task>((task) {
               return Task.fromModel(model: task);
             })?.toList() ??

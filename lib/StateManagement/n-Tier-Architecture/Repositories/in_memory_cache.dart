@@ -1,4 +1,4 @@
-import 'package:flutter_portfolio_project/StateManagement/Repositories/repository.dart';
+import 'package:flutter_portfolio_project/StateManagement/n-Tier-Architecture/Repositories/repository.dart';
 
 class InMemoryCache implements Repository {
   //Mapped storage for data

@@ -1,7 +1,7 @@
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/plan.dart';
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/task.dart';
-import 'package:flutter_portfolio_project/StateManagement/Repositories/in_memory_cache.dart';
-import 'package:flutter_portfolio_project/StateManagement/Repositories/repository.dart';
+import 'package:flutter_portfolio_project/StateManagement/n-Tier-Architecture/Repositories/in_memory_cache.dart';
+import 'package:flutter_portfolio_project/StateManagement/n-Tier-Architecture/Repositories/repository.dart';
 
 class PlanServices {
   final Repository _repository = InMemoryCache();

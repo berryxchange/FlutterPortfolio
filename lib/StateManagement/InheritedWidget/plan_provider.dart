@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_portfolio_project/StateManagement/Controllers/plan_controller.dart';
+import 'package:flutter_portfolio_project/StateManagement/n-Tier-Architecture/Controllers/plan_controller.dart';
 import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/plan.dart';
 
 class PlanProvider extends InheritedWidget {
