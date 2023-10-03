@@ -8,11 +8,11 @@ class Pizza {
   Pizza();
   //deserialize
   Pizza.fromJson(Map<String, dynamic> json) {
-    this.id = json["id"];
-    this.pizzaName = json["pizzaName"];
-    this.description = json["description"];
-    this.price = json["price"];
-    this.imageUrl = json["imageUrl"];
+    id = json["id"];
+    pizzaName = json["pizzaName"];
+    description = json["description"];
+    price = json["price"];
+    imageUrl = json["imageUrl"];
   }
 
 //serialize

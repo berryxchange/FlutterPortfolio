@@ -1,14 +1,11 @@
 import 'dart:convert';
-import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_portfolio_project/DataPersistenceAndCommunicatingWithTheInternet/ConvertDartModelsIntoJSON/Pizza.dart';
 import 'package:flutter_portfolio_project/StateManagement/InheritedWidget/plan_provider.dart';
-import 'package:flutter_portfolio_project/StateManagement/Model-View/View/plan_screen.dart';
-import 'package:flutter_portfolio_project/StateManagement/Multi-Screen/Views/plan_creator_screen.dart';
 
 void main() {
-  runApp(PlanProvider(key: null, child: MasterPlanApp()));
+  runApp(PlanProvider(key: null, child: const MasterPlanApp()));
 }
 
 class MasterPlanApp extends StatelessWidget {
@@ -21,7 +18,7 @@ class MasterPlanApp extends StatelessWidget {
       theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: MyHomePage(),
+      home: const MyHomePage(),
     );
   }
 }
@@ -44,10 +41,10 @@ class _MyHomePageState extends State<MyHomePage> {
 
     //list of pizza
     List<Pizza> myPizzas = [];
-    myMap.forEach((pizza) {
+    for (var pizza in myMap) {
       Pizza myPizza = Pizza.fromJson(pizza);
       myPizzas.add(myPizza);
-    });
+    }
 
     String json = convertToJSON(myPizzas);
     print(json);
@@ -56,9 +53,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String convertToJSON(List<Pizza> pizzas) {
     String json = "[";
-    pizzas.forEach((pizza) {
+    for (var pizza in pizzas) {
       json += jsonEncode(pizza);
-    });
+    }
     json += "]";
     return json;
   }
@@ -73,7 +70,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("JSON"),
+        title: const Text("JSON"),
       ),
       body: Container(
         child: FutureBuilder(
@@ -86,9 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 itemBuilder: (BuildContext context, int index) {
                   return ListTile(
                     title: Text(pizzaSnapshot.data![index].pizzaName),
-                    subtitle: Text(pizzaSnapshot.data![index].description +
-                        " - \$ " +
-                        pizzaSnapshot.data![index].price.toString()),
+                    subtitle: Text("${pizzaSnapshot.data![index].description} - \$ ${pizzaSnapshot.data![index].price}"),
                   );
                 });
           },

@@ -52,7 +52,7 @@ class _PlanScreenState extends State<PlanScreen> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: Text("Master Plan"),
+          title: const Text("Master Plan"),
         ),
         body: Column(
           children: <Widget>[
@@ -72,7 +72,7 @@ class _PlanScreenState extends State<PlanScreen> {
         controller.createNewTask(plan: plan, description: "");
         setState(() {});
       },
-      child: Icon(Icons.add),
+      child: const Icon(Icons.add),
     );
   }
 
