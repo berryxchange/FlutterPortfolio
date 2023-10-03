@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_portfolio_project/StateManagement/InheritedWidget/plan_provider.dart';
-import 'package:flutter_portfolio_project/StateManagement/Model-View/Model/plan.dart';
 import 'package:flutter_portfolio_project/StateManagement/Model-View/View/plan_screen.dart';
 
 class PlanCreatorScreen extends StatefulWidget {
@@ -16,7 +15,7 @@ class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Master Plans")),
+      appBar: AppBar(title: const Text("Master Plans")),
       body: Column(children: <Widget>[
         _buildListCreator(),
         Expanded(
@@ -41,7 +40,7 @@ class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
           elevation: 10,
           child: TextField(
               controller: textController,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   labelText: "Add a plan", contentPadding: EdgeInsets.all(20)),
               onEditingComplete: addPlan),
         ));
@@ -65,7 +64,7 @@ class _PlanCreatorScreenState extends State<PlanCreatorScreen> {
       return Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Icon(
+          const Icon(
             Icons.note,
             size: 100,
             color: Colors.grey,

@@ -2,7 +2,7 @@ import 'package:flutter_portfolio_project/StateManagement/n-Tier-Architecture/Re
 
 class InMemoryCache implements Repository {
   //Mapped storage for data
-  final _storage = Map<int, Model>();
+  final _storage = <int, Model>{};
 
   @override
   Model create() {
@@ -11,7 +11,7 @@ class InMemoryCache implements Repository {
     ids.sort();
 
     //set the ID of the model
-    final id = (ids.length == 0) ? 1 : ids.last + 1;
+    final id = (ids.isEmpty) ? 1 : ids.last + 1;
     final model = Model(id: id);
 
     //set in storage the model according to the ID
