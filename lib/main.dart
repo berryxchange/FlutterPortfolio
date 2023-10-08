@@ -1,8 +1,6 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
-import 'package:flutter_portfolio_project/DataPersistenceAndCommunicatingWithTheInternet/ConvertDartModelsIntoJSON/Pizza.dart';
 import 'package:flutter_portfolio_project/StateManagement/InheritedWidget/plan_provider.dart';
+import 'package:flutter_portfolio_project/AdvancedStateManagement/DartStreams/Stream.dart';
 
 void main() {
   runApp(PlanProvider(key: null, child: const MasterPlanApp()));
@@ -14,55 +12,44 @@ class MasterPlanApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: "Flutter JSON Demo",
+      title: "Stream",
       theme: ThemeData(
-          primarySwatch: Colors.blue,
+          primarySwatch: Colors.deepPurple,
           visualDensity: VisualDensity.adaptivePlatformDensity),
-      home: const MyHomePage(),
+      home: const StreamHomePage(),
     );
   }
 }
 
-class MyHomePage extends StatefulWidget {
-  const MyHomePage({super.key});
+class StreamHomePage extends StatefulWidget {
+  const StreamHomePage({super.key});
 
   @override
-  State<MyHomePage> createState() => _MyHomePageState();
+  State<StreamHomePage> createState() => _StreamHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  String pizzaString = "";
-  Future<List<Pizza>> readJsonFile() async {
-    String myString = await DefaultAssetBundle.of(context)
-        .loadString("assets/pizzalist.json");
+class _StreamHomePageState extends State<StreamHomePage> {
+  late Color bgColor = Colors.white;
+  late ColorStream colorStream;
 
-    //decode the JSON file
-    List myMap = jsonDecode(myString);
+  changeColor() async {
+    /*await for (var eventColor in colorStream.getColors()) {
+      setState(() {
+        bgColor = eventColor;
+      });
+    }*/
 
-    //list of pizza
-    List<Pizza> myPizzas = [];
-    for (var pizza in myMap) {
-      Pizza myPizza = Pizza.fromJson(pizza);
-      myPizzas.add(myPizza);
-    }
-
-    String json = convertToJSON(myPizzas);
-    print(json);
-    return myPizzas;
-  }
-
-  String convertToJSON(List<Pizza> pizzas) {
-    String json = "[";
-    for (var pizza in pizzas) {
-      json += jsonEncode(pizza);
-    }
-    json += "]";
-    return json;
+    colorStream.getColors().listen((eventColor) {
+      setState(() {
+        bgColor = eventColor;
+      });
+    });
   }
 
   @override
   void initState() {
-    readJsonFile();
+    colorStream = ColorStream();
+    changeColor();
     super.initState();
   }
 
@@ -70,25 +57,10 @@ class _MyHomePageState extends State<MyHomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("JSON"),
+        title: Text("Stream"),
       ),
       body: Container(
-        child: FutureBuilder(
-          builder:
-              (BuildContext context, AsyncSnapshot<List<Pizza>> pizzaSnapshot) {
-            return ListView.builder(
-                itemCount: (pizzaSnapshot.data == null)
-                    ? 0
-                    : pizzaSnapshot.data!.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return ListTile(
-                    title: Text(pizzaSnapshot.data![index].pizzaName),
-                    subtitle: Text("${pizzaSnapshot.data![index].description} - \$ ${pizzaSnapshot.data![index].price}"),
-                  );
-                });
-          },
-          future: readJsonFile(),
-        ),
+        decoration: BoxDecoration(color: bgColor),
       ),
     );
   }
