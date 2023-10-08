@@ -43,6 +43,9 @@ class _StreamHomePageState extends State<StreamHomePage> {
   //Stream Transformer
   late StreamTransformer streamTransformer;
 
+  //Stream Subscription
+  late StreamSubscription streamSubscription;
+
   changeColor() async {
     /*await for (var eventColor in colorStream.getColors()) {
       setState(() {
@@ -57,6 +60,10 @@ class _StreamHomePageState extends State<StreamHomePage> {
     });
   }
 
+  void stopStream() {
+    numberStreamController.close();
+  }
+
   @override
   void initState() {
     //colorStream = ColorStream();
@@ -65,7 +72,8 @@ class _StreamHomePageState extends State<StreamHomePage> {
     numberStream = NumberStream();
     numberStreamController = numberStream.controller;
     Stream stream = numberStreamController.stream;
-    streamTransformer =
+
+    /*streamTransformer =
         StreamTransformer<int, dynamic>.fromHandlers(handleData: (value, sink) {
       sink.add(value * 10);
     }, handleError: ((error, stackTrace, sink) {
@@ -73,7 +81,7 @@ class _StreamHomePageState extends State<StreamHomePage> {
     }), handleDone: (sink) {
       sink.close();
     });
-
+*/
     /*stream.listen((eventNumber) {
       setState(() {
         lastNumber = eventNumber;
@@ -84,7 +92,8 @@ class _StreamHomePageState extends State<StreamHomePage> {
       });
     });
     */
-    stream.transform(streamTransformer).listen((eventNumber) {
+
+    /*stream.transform(streamTransformer).listen((eventNumber) {
       setState(() {
         lastNumber = eventNumber;
       });
@@ -93,6 +102,23 @@ class _StreamHomePageState extends State<StreamHomePage> {
         lastNumber = -1;
       });
     });
+*/
+
+    streamSubscription = stream.listen((event) {
+      setState(() {
+        lastNumber = event;
+      });
+    });
+
+    streamSubscription.onError((error) {
+      setState(() {
+        lastNumber = -1;
+      });
+    });
+
+    streamSubscription.onDone(() {
+      print("OnDone was called");
+    });
 
     super.initState();
   }
@@ -100,7 +126,14 @@ class _StreamHomePageState extends State<StreamHomePage> {
   void addRandomNumber() {
     Random random = Random();
     int myNum = random.nextInt(10);
-    numberStream.addNumberToSink(newNumber: myNum);
+    if (!numberStreamController.isClosed) {
+      numberStream.addNumberToSink(newNumber: myNum);
+    } else {
+      setState(() {
+        lastNumber = -1; // throws error number
+      });
+    }
+
     //test for errors
     //numberStream.addError();
   }
@@ -123,7 +156,12 @@ class _StreamHomePageState extends State<StreamHomePage> {
                 onPressed: () {
                   addRandomNumber();
                 },
-                child: Text("New Random Number"))
+                child: Text("New Random Number")),
+            ElevatedButton(
+                onPressed: () {
+                  stopStream();
+                },
+                child: Text("Stop Stream"))
           ],
         ),
       ),
